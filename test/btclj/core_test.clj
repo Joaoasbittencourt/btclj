@@ -1,6 +1,5 @@
 (ns btclj.core-test
-  (:require [clojure.test :refer :all]
-            [btclj.core :refer :all]))
+  (:require [clojure.test :refer [deftest is testing]]))
 
 (deftest a-test
   (testing "I pass"
