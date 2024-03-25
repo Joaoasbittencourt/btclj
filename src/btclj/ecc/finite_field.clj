@@ -1,60 +1,47 @@
 (ns btclj.ecc.finite-field)
 
-(defn add [el1 el2]
-  (let [a (first el1)
-        b (first el2)
-        p (second el1)]
-    [(mod (+ a b) p) p]))
+(defn add
+  ([p n1 n2] (mod (+ n1 n2) p))
+  ([p n1] (fn [n2] (add p n1 n2)))
+  ([p] (fn [n1 n2] (add p n1 n2))))
 
-(defn sub [el1 el2]
-  (let [a (first el1)
-        b (first el2)
-        p (second el1)]
-    [(mod (- a b) p) p]))
+(defn sub
+  ([p n1 n2] (mod (- n1 n2) p))
+  ([p n1] (fn [n2] (sub p n1 n2)))
+  ([p] (fn [n1 n2] (sub p n1 n2))))
 
-(defn mul [el1 el2]
-  (let [a (first el1)
-        b (first el2)
-        p (second el1)]
-    [(mod (* a b) p) p]))
+(defn mul
+  ([p n1 n2] (mod (* n1 n2) p))
+  ([p n1] (fn [n2] (mul p n1 n2)))
+  ([p] (fn [n1 n2] (mul p n1 n2))))
 
-(defn pow [[value prime] exponent]
-  (if (zero? exponent)
-    [1 prime]
-    (let [n     (.mod
-                 (biginteger exponent)
-                 (biginteger (dec prime)))
-          num   (.modPow (biginteger value)
-                         (biginteger n)
-                         (biginteger prime))]
-      [num prime])))
+(defn pow
+  ([p n exp]
+   (if (zero? exp) 1
+       (.modPow
+        (biginteger n)
+        (biginteger (.mod (biginteger exp)
+                          (biginteger (dec p))))
+        (biginteger p))))
+  ([p] (fn [n exp] (pow p n exp)))
+  ([p n] (fn [exp] (pow p n exp))))
 
-(defn div [el1 el2]
-  (let [n1 (biginteger (first el1))
-        n2 (biginteger (first el2))
-        prime (biginteger (second el2))
-        p-2 (biginteger (- prime 2))]
-    [(biginteger
-      (mod
-       (* n1 (.modPow n2 p-2 prime)) prime))
-     prime]))
+(defn div
+  ([p n1 n2]
+   (let [n1 (biginteger n1)
+         n2 (biginteger n2)
+         p (biginteger p)
+         p-2 (biginteger (- p 2))]
+     (mod
+      (* n1 (.modPow n2 p-2 p)) p)))
+  ([p n1] (fn [n2] (div p n1 n2)))
+  ([p] (fn [n1 n2] (div p n1 n2))))
 
-(defn smul  [[num prime] scalar]
-  [(mod
-    (* num scalar) prime) prime])
+(defn smul
+  ([prime num scalar]
+   (mod (* num scalar) prime))
+  ([prime]
+   (fn [num scalar]
+     (smul prime num scalar))))
 
-(comment
-  (defn same-set? [elements]
-    (apply = (map second elements)))
-
-  (defn assert-same-set! [& elements]
-    (when (not (same-set? elements))
-      (throw
-       (IllegalArgumentException. "All elements must be in the same set"))))
-
-  (defn finite-element? [[num prime]]
-    (and (integer? num)
-         (integer? prime)
-         (>= num 0)
-         (> prime num))))
 

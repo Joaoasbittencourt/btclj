@@ -4,31 +4,23 @@
 
 (deftest finite-element-test
   (testing "add"
-    (is
-     (= [17 31] (ff/add [2 31] [15 31])))
-    (is
-     (= [7 31] (ff/add [17 31] [21 31]))))
+    (is (= 17 (ff/add 31 2 15)))
+    (is (= 7 (ff/add 31 17 21))))
 
   (testing "sub"
-    (is
-     (= [25 31] (ff/sub [29 31] [4 31])))
-    (is
-     (= [16 31] (ff/sub [15 31] [30 31]))))
+    (is (= 25 (ff/sub 31 29 4)))
+    (is (= 16 (ff/sub 31 15 30))))
 
   (testing "mul"
-    (is
-     (= [22 31] (ff/mul [24 31] [19 31]))))
+    (is (= 22 (ff/mul 31 24 19))))
 
   (testing "pow"
-    (is
-     (= [15 31] (ff/pow [17 31] 3)))
-    (is
-     (= [29 31] (ff/pow [17 31] -3)))
-    (is
-     (= [16 31] (ff/mul (ff/pow [5 31] 5) [18 31]))))
+    (is (= 15 (ff/pow 31 17 3)))
+    (is (= 29 (ff/pow 31 17 -3)))
+    (is (= 16 (ff/mul 31 (ff/pow 31 5 5) 18))))
 
   (testing "div"
-    (is
-     (= [4 31] (ff/div [3 31] [24 31])))))
+    (is (= 4 (let [div-on-f31 (ff/div 31)]
+               (div-on-f31 3 24))))))
 
 
