@@ -27,7 +27,7 @@
           num   (.modPow (biginteger value)
                          (biginteger n)
                          (biginteger prime))]
-      [(int num) prime])))
+      [num prime])))
 
 (defn div [el1 el2]
   (let [n1 (biginteger (first el1))
@@ -39,6 +39,9 @@
        (* n1 (.modPow n2 p-2 prime)) prime))
      prime]))
 
+(defn smul  [[num prime] scalar]
+  [(mod
+    (* num scalar) prime) prime])
 
 (comment
   (defn same-set? [elements]
