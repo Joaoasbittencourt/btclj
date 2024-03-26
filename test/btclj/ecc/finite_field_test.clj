@@ -22,5 +22,3 @@
   (testing "div"
     (is (= 4 (let [div-on-f31 (ff/div 31)]
                (div-on-f31 3 24))))))
-
-

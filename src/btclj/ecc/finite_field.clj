@@ -43,5 +43,3 @@
   ([prime]
    (fn [num scalar]
      (smul prime num scalar))))
-
-

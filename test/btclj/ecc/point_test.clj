@@ -49,5 +49,3 @@
                  (if (= [##Inf ##Inf] point) count
                      (recur (point/add params point [x y])
                             (inc count)))))))))
-
-
