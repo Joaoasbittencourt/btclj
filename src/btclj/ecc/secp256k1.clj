@@ -1,8 +1,9 @@
 (ns btclj.ecc.secp256k1
-  (:require [btclj.ecc.point :as point]
+  (:require [btclj.ecc.convert :refer [bytes->biginteger]]
+            [btclj.ecc.finite-field :as ff]
+            [btclj.ecc.point :as point]
             [btclj.ecc.sha256 :refer [hash256]]
-            [btclj.numeric.big-ints :refer [mod-pow']]
-            [btclj.numeric.random :refer [gen-secure-random-int]]))
+            [btclj.numeric.big-ints :refer [mod-pow']]))
 
 (def a 0)
 (def b 7)
@@ -21,30 +22,29 @@
 
 (defn mul [point scalar] (point/smul curve point (mod scalar n)))
 
-(defn -mod-pow-n' [base exp] (mod-pow' base exp n))
-
-(defn str->priv-key [secret] (hash256 secret))
-
-(defn ->pub-key [private-key] (mul G private-key))
+(defn mod-pow-n' [base exp] (mod-pow' base exp n))
 
 (defn ->r [k] (first (mul G k)))
 
 (defn ->s [priv k r z]
   (-> (+ z (*' r priv))
-      (*'  (-mod-pow-n' k (- n 2)))
+      (*'  (mod-pow-n' k (- n 2)))
       (mod n)))
 
-(defn valid? [[r s] pub z]
-  (let [s-inv (-mod-pow-n' s (- n 2))
-        u (mod (*' z s-inv) n)
-        v (mod (*' r s-inv) n)
-        r' (first (add (mul G u)
-                       (mul pub v)))]
-    (= r r')))
+(defn ->priv-key [secret] (hash256 secret))
 
-(defn sign [private-key message]
-  (let [k (gen-secure-random-int n)
-        r (->r k)
-        s (->s private-key k r message)]
-    [r (if (> n 2)
-         (- n s) s)]))
+(defn ->pub-key [priv] (mul G priv))
+
+(defn x->y [even x]
+  (let [exp (-> (biginteger p)
+                (.add BigInteger/ONE)
+                (.divide (BigInteger/valueOf 4)))
+
+        x**3 (ff/pow p x 3)
+        alpha (ff/add p x**3 b)
+        beta  (ff/pow p alpha exp)
+        p-beta (-' p beta)
+        beta-is-even (even? beta)
+        even-beta (if beta-is-even beta p-beta)
+        odd-beta  (if beta-is-even p-beta beta)]
+    (if even even-beta odd-beta)))
