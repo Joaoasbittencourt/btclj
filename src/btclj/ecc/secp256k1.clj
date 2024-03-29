@@ -1,9 +1,9 @@
 (ns btclj.ecc.secp256k1
-  (:require [btclj.ecc.convert :refer [bytes->biginteger]]
-            [btclj.ecc.finite-field :as ff]
-            [btclj.ecc.point :as point]
-            [btclj.ecc.sha256 :refer [hash256]]
-            [btclj.numeric.big-ints :refer [mod-pow']]))
+  (:require
+   [btclj.ecc.finite-field :as ff]
+   [btclj.ecc.point :as point]
+   [btclj.ecc.sha256 :refer [hash256]]
+   [btclj.numeric.big-ints :refer [mod-pow']]))
 
 (def a 0)
 (def b 7)
@@ -47,4 +47,6 @@
         beta-is-even (even? beta)
         even-beta (if beta-is-even beta p-beta)
         odd-beta  (if beta-is-even p-beta beta)]
-    (if even even-beta odd-beta)))
+    (if even
+      even-beta
+      odd-beta)))

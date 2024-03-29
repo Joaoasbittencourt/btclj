@@ -66,4 +66,3 @@
                  (add-point current current)
                  (if (= 1 (big-and coef 1)) (add-point result current)
                      result))))))
-
