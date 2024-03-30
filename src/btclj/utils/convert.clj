@@ -1,4 +1,4 @@
-(ns btclj.ecc.convert)
+(ns btclj.utils.convert)
 
 (defn bytes->hex [n]
   (format "%x" (biginteger n)))

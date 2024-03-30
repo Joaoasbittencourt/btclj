@@ -1,4 +1,4 @@
-(ns btclj.numeric.random)
+(ns btclj.utils.random)
 
 (defn gen-secure-random-int [range]
   (let [random (java.security.SecureRandom/getInstance "SHA1PRNG")

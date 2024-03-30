@@ -1,5 +1,5 @@
 (ns btclj.ecc.secp256k1-test
-  (:require [btclj.ecc.convert :refer [biginteger->hex]]
+  (:require [btclj.utils.convert :refer [biginteger->hex]]
             [btclj.ecc.secp256k1 :as secp256k1]
             [btclj.ecc.sha256 :refer [hash256]]
             [btclj.ecc.signature :as sig]

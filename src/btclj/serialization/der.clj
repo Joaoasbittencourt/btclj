@@ -1,5 +1,5 @@
-(ns btclj.ecc.serialization.der
-  (:require [btclj.ecc.convert :as cvt]))
+(ns btclj.serialization.der
+  (:require [btclj.utils.convert :as cvt]))
 
 (defn- remove-leading-zeros [bytes]
   (let [first-non-zero

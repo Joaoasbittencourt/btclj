@@ -3,7 +3,7 @@
    [btclj.ecc.finite-field :as ff]
    [btclj.ecc.point :as point]
    [btclj.ecc.sha256 :refer [hash256]]
-   [btclj.numeric.big-ints :refer [mod-pow']]))
+   [btclj.utils.big-ints :refer [mod-pow']]))
 
 (def a 0)
 (def b 7)

@@ -1,7 +1,7 @@
 (ns btclj.ecc.signature
   (:require
    [btclj.ecc.secp256k1 :refer [->r ->s add G mod-pow-n' mul n]]
-   [btclj.numeric.random :refer [gen-secure-random-int]]))
+   [btclj.utils.random :refer [gen-secure-random-int]]))
 
 (defn valid? [[r s] pub z]
   (let [s-inv (mod-pow-n' s (- n 2))

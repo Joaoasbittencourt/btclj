@@ -1,6 +1,6 @@
 (ns btclj.ecc.point
   (:require [btclj.ecc.finite-field :as ff]
-            [btclj.numeric.big-ints :refer [big-and]]))
+            [btclj.utils.big-ints :refer [big-and]]))
 
 (defn in? [[p a b] [x y]]
   (let [pow (ff/pow p)

@@ -1,6 +1,6 @@
-(ns btclj.ecc.serialization.sec-test
+(ns btclj.serialization.sec-test
   (:require [btclj.ecc.secp256k1 :as secp256k1]
-            [btclj.ecc.serialization.sec :as ser]
+            [btclj.serialization.sec :as ser]
             [clojure.test :refer [deftest is testing]]))
 
 (deftest uncompressed-sec-test

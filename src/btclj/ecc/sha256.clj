@@ -1,5 +1,5 @@
 (ns btclj.ecc.sha256
-  (:require [btclj.ecc.convert :refer [bytes->biginteger]]))
+  (:require [btclj.utils.convert :refer [bytes->biginteger]]))
 
 (defn sha256 [bytes]
   (.digest

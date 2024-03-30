@@ -1,4 +1,4 @@
-(ns btclj.numeric.big-ints)
+(ns btclj.utils.big-ints)
 
 (defn big-and
   [f & r]
