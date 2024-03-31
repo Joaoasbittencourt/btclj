@@ -15,13 +15,16 @@
 (defn hex->biginteger [hex]
   (BigInteger. hex 16))
 
-(defn biginteger->bytes [num]
-  (.toByteArray num))
-
-(defn hex->bytes [hex]
-  (-> hex
-      hex->biginteger
-      biginteger->bytes))
+(defn hex->bytes
+  "Convert hex string to byte sequence"
+  [s]
+  (letfn [(unhexify-2 [c1 c2]
+            (unchecked-byte
+             (+ (bit-shift-left (Character/digit c1 16) 4)
+                (Character/digit c2 16))))]
+    (->> (partition 2 s)
+         (map #(apply unhexify-2 %))
+         (byte-array))))
 
 (defn edian->bytes [big-int byte-length byte-order]
   (let [bytes (.toByteArray big-int)

@@ -1,4 +1,4 @@
-(ns btclj.ecc.sha256
+(ns btclj.crypto.sha256
   (:require [btclj.utils.convert :refer [bytes->biginteger]]))
 
 (defn sha256 [bytes]
@@ -14,6 +14,6 @@
      (int? data) (.toByteArray (biginteger data))
      (bytes? data) data
      :else (throw (IllegalArgumentException. "Unsupported data type")))
-   sha256
-   sha256
-   bytes->biginteger))
+   (sha256)
+   (sha256)
+   (bytes->biginteger)))
