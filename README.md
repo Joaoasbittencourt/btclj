@@ -1,14 +1,12 @@
 # btclj
 
-FIXME: my new application.
+This project is an attempt to program bitcoin in clojure with the purpose of learning how it works under the hood.
 
 ## Installation
 
 Download from https://github.com/btclj/btclj
 
 ## Usage
-
-FIXME: explanation
 
 Run the project directly, via `:exec-fn`:
 
@@ -51,22 +49,6 @@ Run that uberjar:
     $ java -jar target/btclj-0.1.0-SNAPSHOT.jar
 
 If you remove `version` from `build.clj`, the uberjar will become `target/btclj-standalone.jar`.
-
-## Options
-
-FIXME: listing of options this app accepts.
-
-## Examples
-
-...
-
-### Bugs
-
-...
-
-### Any Other Sections
-### That You Think
-### Might be Useful
 
 ## License
 
