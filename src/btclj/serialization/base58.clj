@@ -1,5 +1,7 @@
 (ns btclj.serialization.base58
-  (:require [btclj.utils.convert :as cvt]))
+  (:require
+   [btclj.crypto.sha256 :refer [sha256]]
+   [btclj.utils.convert :as cvt]))
 
 (def alphabet "123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz")
 (def alphabet-count (count alphabet))
@@ -24,7 +26,6 @@
          (quot num alphabet-count)
          (str char result))))))
 
-
 (defn decode
   "Decode a base58 string into a byte array."
   [string]
@@ -39,16 +40,19 @@
                   (biginteger num) 25 :big)]
     (byte-array combined)))
 
-(-> "eff69ef2b1bd93a66ed5219add4fb51e11a840f404876325a1e8ffe0529a2c"
-    (cvt/hex->bytes)
-    (encode)
-    (decode)
-    (cvt/bytes->hex)
-    (= "eff69ef2b1bd93a66ed5219add4fb51e11a840f404876325a1e8ffe0529a2c")
+(defn checksum
+  "Calculate the checksum of a byte array."
+  [bytes]
+  (->> bytes
+       (sha256)
+       (sha256)
+       (take 4)
+       (byte-array)))
 
-
-    ;
-    )
-
-
-
+(defn encode-checksum
+  "Encode a byte array into a base58 string with a checksum."
+  [bytes]
+  (-> bytes
+      (concat (checksum bytes))
+      (byte-array)
+      (encode)))

@@ -1,6 +1,7 @@
 (ns btclj.serialization.sec
-  (:require [btclj.utils.convert :refer [hex->biginteger]]
-            [btclj.ecc.secp256k1 :as secp256k1]))
+  (:require
+   [btclj.ecc.secp256k1 :as secp256k1]
+   [btclj.utils.convert :refer [hex->biginteger]]))
 
 (defn- hex-32 [n]
   (format
