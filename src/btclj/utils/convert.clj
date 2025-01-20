@@ -1,5 +1,12 @@
-(ns btclj.utils.convert)
+(ns btclj.utils.convert
+  (:require
+   [btclj.utils.convert :as cvt]))
 
+(defn hexify [bytes]
+  (apply str
+         (map #(format "%02x" %) bytes)))
+
+;; check why changing this to hexify approach we break the tests
 (defn bytes->hex [n]
   (format "%x" (biginteger n)))
 
@@ -34,3 +41,6 @@
      (if (= byte-order :big)
        padded-bytes
        (reverse padded-bytes)))))
+
+(defn little-edian->bigint [bytes]
+  (BigInteger. 1 (byte-array (reverse bytes))))

@@ -12,7 +12,7 @@
   "Append the network prefix to a hash"
   [b net]
   (-> b
-      (cvt/bytes->hex)
+      (cvt/hexify)
       (->> (str (network-prefixes net)))
       (cvt/hex->bytes)))
 

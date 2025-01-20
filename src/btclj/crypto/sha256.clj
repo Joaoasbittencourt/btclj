@@ -6,7 +6,7 @@
    (java.security.MessageDigest/getInstance "SHA-256")
    bytes))
 
-(defn hash256 [data]
+(defn bhash256 [data]
   (->
    (cond
      (string? data) (.getBytes data)
@@ -15,5 +15,7 @@
      (bytes? data) data
      :else (throw (IllegalArgumentException. "Unsupported data type")))
    (sha256)
-   (sha256)
-   (bytes->biginteger)))
+   (sha256)))
+
+(defn hash256 [data]
+  (bytes->biginteger (bhash256 data)))

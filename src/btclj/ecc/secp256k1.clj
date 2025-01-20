@@ -31,6 +31,7 @@
       (*'  (mod-pow-n' k (- n 2)))
       (mod n)))
 
+;; check if this is necessary?
 (defn ->priv-key [secret] (hash256 secret))
 
 (defn ->pub-key [priv] (mul G priv))
