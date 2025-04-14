@@ -28,4 +28,3 @@
                  secret (little-edian->bigint (bhash256 pass-phrase))
                  pub-key (->pub-key secret)]
              (address (point->csec pub-key) :testnet))))))
-
